@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#dff4ff"/>
+      <stop offset="100%" stop-color="#f8fbff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" rx="40" fill="url(#bg)"/>
+  <circle cx="200" cy="140" r="80" fill="#ffd9a0"/>
+  <rect x="110" y="360" width="330" height="210" rx="26" fill="#204c73"/>
+  <rect x="150" y="400" width="250" height="130" rx="18" fill="#2e6b9a"/>
+  <circle cx="275" cy="465" r="46" fill="#dff4ff"/>
+  <circle cx="275" cy="465" r="20" fill="#204c73"/>
+  <path d="M0 610 C180 520 280 690 470 590 C610 515 760 650 960 560 C1050 520 1120 520 1200 555 L1200 800 L0 800 Z" fill="#7ec8b7"/>
+  <path d="M0 665 C170 565 305 748 520 640 C690 555 815 720 1000 640 C1080 605 1140 608 1200 632 L1200 800 L0 800 Z" fill="#5ba68b"/>
+  <rect x="640" y="120" width="380" height="235" rx="24" fill="#fff" stroke="#adc9df" stroke-width="4"/>
+  <rect x="680" y="160" width="300" height="12" rx="6" fill="#d4e6f3"/>
+  <rect x="680" y="195" width="220" height="12" rx="6" fill="#d4e6f3"/>
+  <rect x="680" y="238" width="250" height="72" rx="14" fill="#dff4ff"/>
+  <rect x="745" y="440" width="235" height="190" rx="24" fill="#fff" stroke="#adc9df" stroke-width="4"/>
+  <rect x="785" y="483" width="150" height="90" rx="16" fill="#f5d59a"/>
+  <path d="M790 675 C835 620 915 620 955 675" fill="none" stroke="#204c73" stroke-width="10" stroke-linecap="round"/>
+  <text x="150" y="710" font-family="Arial, Helvetica, sans-serif" font-size="46" fill="#173047" font-weight="700">Business • Travel • Creativity</text>
+</svg>

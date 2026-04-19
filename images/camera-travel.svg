@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700">
+  <rect width="900" height="700" rx="34" fill="#eef5fa"/>
+  <circle cx="125" cy="108" r="42" fill="#ffd6a0"/>
+  <path d="M0 560 C120 480 220 610 345 535 C455 470 540 590 650 530 C735 485 810 470 900 505 L900 700 L0 700 Z" fill="#8cc7b8"/>
+  <path d="M0 610 C100 548 230 668 382 590 C510 525 605 636 760 584 C810 567 860 560 900 572 L900 700 L0 700 Z" fill="#6da891"/>
+  <rect x="185" y="250" width="360" height="220" rx="28" fill="#234867"/>
+  <rect x="240" y="220" width="120" height="60" rx="18" fill="#234867"/>
+  <circle cx="365" cy="360" r="82" fill="#d9eef7"/>
+  <circle cx="365" cy="360" r="48" fill="#234867"/>
+  <rect x="454" y="285" width="54" height="26" rx="12" fill="#ffd6a0"/>
+  <path d="M590 190 l170 20 -40 52 -130 -20 z" fill="#ffffff" stroke="#adc4d7" stroke-width="5"/>
+  <text x="625" y="232" font-family="Arial" font-size="30" fill="#1d3850" font-weight="700">POSTCARD</text>
+  <path d="M628 362 q48 -85 121 -88" fill="none" stroke="#1abc9c" stroke-width="14" stroke-linecap="round"/>
+  <path d="M715 258 l36 14 -20 34" fill="none" stroke="#1abc9c" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="673" cy="428" r="54" fill="#ffffff" stroke="#adc4d7" stroke-width="5"/>
+  <path d="M650 430 l18 18 30 -34" fill="none" stroke="#1abc9c" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="74" y="652" font-family="Arial" font-size="40" fill="#173047" font-weight="700">See the trip. Then tell the story.</text>
+</svg>

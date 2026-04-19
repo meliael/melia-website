@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exposure Explorer</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#101a2e;
+      --soft:#17223a;
+      --line:#304564;
+      --text:#eef4ff;
+      --muted:#b8c4dd;
+      --accent:#8fd3ff;
+      --gold:#ffd166;
+      --green:#8fe388;
+      --red:#ff8e8e;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:radial-gradient(circle at top, #162543 0%, var(--bg) 55%);
+      color:var(--text);
+    }
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:24px;
+    }
+    .topnav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:22px;
+    }
+    .links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .links a{
+      color:var(--text);
+      text-decoration:none;
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,0.03);
+    }
+    .hero{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:20px;
+      margin-bottom:20px;
+    }
+    .panel{
+      background:rgba(16,26,46,0.9);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.25);
+    }
+    h1,h2,h3,p{margin-top:0}
+    .badge{
+      display:inline-block;
+      background:rgba(143,211,255,0.14);
+      color:var(--accent);
+      border:1px solid rgba(143,211,255,0.4);
+      border-radius:999px;
+      padding:8px 12px;
+      margin-bottom:12px;
+      font-size:0.92rem;
+    }
+    .scenario-name{
+      font-size:1.65rem;
+      margin-bottom:8px;
+    }
+    .mini{
+      color:var(--muted);
+      line-height:1.6;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin-top:18px;
+    }
+    .control{
+      background:var(--soft);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+    }
+    .control label{
+      display:block;
+      color:var(--muted);
+      margin-bottom:10px;
+      font-size:0.95rem;
+    }
+    .value-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+    }
+    .value{
+      font-size:1.25rem;
+      font-weight:700;
+    }
+    button{
+      cursor:pointer;
+      border:none;
+      border-radius:12px;
+      padding:10px 14px;
+      font-weight:700;
+      background:#1d3557;
+      color:white;
+    }
+    button:hover{filter:brightness(1.08)}
+    .button-bar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:18px;
+    }
+    .primary{background:#2a5ea8}
+    .gold{background:#856404;color:#fff8d8}
+    .ghost{background:transparent;border:1px solid var(--line)}
+    .meter{
+      margin-top:12px;
+      background:#09111f;
+      border-radius:999px;
+      height:14px;
+      overflow:hidden;
+      border:1px solid var(--line);
+    }
+    .fill{
+      height:100%;
+      width:0%;
+      transition:width .35s ease;
+    }
+    .score-layout{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+      margin-top:18px;
+    }
+    .score-card{
+      background:var(--soft);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+    }
+    .score-big{
+      font-size:2rem;
+      font-weight:800;
+      margin:8px 0 0;
+    }
+    .hint{
+      margin-top:16px;
+      padding:14px;
+      border-radius:16px;
+      background:rgba(255,209,102,0.09);
+      border:1px solid rgba(255,209,102,0.4);
+      color:#fff1bd;
+      display:none;
+    }
+    .results{
+      margin-top:18px;
+      padding:16px;
+      border-radius:18px;
+      background:#0d1629;
+      border:1px solid var(--line);
+      line-height:1.65;
+      min-height:82px;
+    }
+    .legend{
+      display:grid;
+      gap:10px;
+    }
+    .legend p{margin-bottom:0}
+    @media (max-width:900px){
+      .hero, .grid, .score-layout{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topnav">
+      <div>
+        <div class="badge">AI-assisted web app</div>
+        <h1>Exposure Explorer</h1>
+      </div>
+      <div class="links">
+        <a href="scratch.html">Back to Scratch Page</a>
+        <a href="index.html">Professional Home</a>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="panel">
+        <h2 id="scenarioTitle" class="scenario-name">Loading scenario...</h2>
+        <p id="scenarioDescription" class="mini"></p>
+
+        <div class="grid">
+          <div class="control">
+            <label>Aperture</label>
+            <div class="value-row">
+              <button onclick="stepSetting('aperture', -1)">−</button>
+              <div id="apertureValue" class="value">f/4</div>
+              <button onclick="stepSetting('aperture', 1)">+</button>
+            </div>
+          </div>
+
+          <div class="control">
+            <label>Shutter Speed</label>
+            <div class="value-row">
+              <button onclick="stepSetting('shutter', -1)">−</button>
+              <div id="shutterValue" class="value">1/125</div>
+              <button onclick="stepSetting('shutter', 1)">+</button>
+            </div>
+          </div>
+
+          <div class="control">
+            <label>ISO</label>
+            <div class="value-row">
+              <button onclick="stepSetting('iso', -1)">−</button>
+              <div id="isoValue" class="value">400</div>
+              <button onclick="stepSetting('iso', 1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-bar">
+          <button class="primary" onclick="scoreSetup()">Score My Settings</button>
+          <button class="gold" onclick="showHint()">Show Hint</button>
+          <button class="ghost" onclick="randomScenario()">New Scenario</button>
+          <button class="ghost" onclick="resetSettings()">Reset</button>
+        </div>
+
+        <div id="hintBox" class="hint"></div>
+        <div id="results" class="results">Set your camera settings, then click <strong>Score My Settings</strong> to see how well they fit the scene.</div>
+      </div>
+
+      <div class="panel">
+        <h2>How it works</h2>
+        <div class="legend">
+          <p><strong>Brightness</strong> compares your exposure to the lighting in the scene.</p>
+          <p><strong>Motion</strong> checks whether your shutter speed is fast enough or slow enough for the subject.</p>
+          <p><strong>Depth</strong> checks whether your aperture matches the style of shot you want.</p>
+          <p>This app is meant to feel like practice before a real trip or photo session.</p>
+        </div>
+
+        <div class="score-layout">
+          <div class="score-card">
+            <div>Brightness</div>
+            <div id="brightnessScore" class="score-big">0</div>
+            <div class="meter"><div id="brightnessFill" class="fill"></div></div>
+          </div>
+          <div class="score-card">
+            <div>Motion</div>
+            <div id="motionScore" class="score-big">0</div>
+            <div class="meter"><div id="motionFill" class="fill"></div></div>
+          </div>
+          <div class="score-card">
+            <div>Depth</div>
+            <div id="depthScore" class="score-big">0</div>
+            <div class="meter"><div id="depthFill" class="fill"></div></div>
+          </div>
+        </div>
+
+        <div class="score-card" style="margin-top:16px;">
+          <div>Total Score</div>
+          <div id="totalScore" class="score-big">0</div>
+          <div class="meter"><div id="totalFill" class="fill"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const apertureOptions = [1.8, 2.8, 4, 5.6, 8, 11, 16];
+    const shutterOptions = [
+      { label: '1/2000', value: 1/2000 },
+      { label: '1/1000', value: 1/1000 },
+      { label: '1/500', value: 1/500 },
+      { label: '1/250', value: 1/250 },
+      { label: '1/125', value: 1/125 },
+      { label: '1/60', value: 1/60 },
+      { label: '1/30', value: 1/30 },
+      { label: '1/15', value: 1/15 }
+    ];
+    const isoOptions = [100, 200, 400, 800, 1600, 3200, 6400];
+
+    const scenarios = [
+      {
+        title: 'Golden Hour Portrait',
+        description: 'Your friend is standing still near sunset. You want a soft background and flattering light.',
+        targetEV: 10,
+        motionTarget: 1/125,
+        depthTarget: 'shallow',
+        hint: 'Use a wider aperture for blur, a medium shutter speed because the subject is mostly still, and keep ISO as low as the light allows.'
+      },
+      {
+        title: 'Busy European Street at Night',
+        description: 'You are handholding your camera in a lively city square after dark. You want a usable travel photo without too much blur.',
+        targetEV: 4,
+        motionTarget: 1/125,
+        depthTarget: 'medium',
+        hint: 'Night scenes need more light. Open your aperture, raise ISO, and avoid using a shutter speed that is too slow to handhold.'
+      },
+      {
+        title: 'Fast Cyclist Passing By',
+        description: 'A cyclist suddenly enters the frame in daylight. You want the rider sharp.',
+        targetEV: 13,
+        motionTarget: 1/1000,
+        depthTarget: 'medium',
+        hint: 'Fast motion means a fast shutter speed. If that darkens the image, compensate with ISO or a wider aperture.'
+      },
+      {
+        title: 'Mountain Landscape Midday',
+        description: 'You are taking a wide scenic shot in bright daylight and want foreground and background to look sharp.',
+        targetEV: 14,
+        motionTarget: 1/125,
+        depthTarget: 'deep',
+        hint: 'Landscapes usually benefit from a narrower aperture for depth. Midday light gives you room to keep ISO low.'
+      }
+    ];
+
+    let state = {
+      apertureIndex: 2,
+      shutterIndex: 4,
+      isoIndex: 2,
+      scenario: scenarios[0]
+    };
+
+    function clamp(num, min, max){
+      return Math.min(Math.max(num, min), max);
+    }
+
+    function updateDisplay(){
+      document.getElementById('apertureValue').textContent = `f/${apertureOptions[state.apertureIndex]}`;
+      document.getElementById('shutterValue').textContent = shutterOptions[state.shutterIndex].label;
+      document.getElementById('isoValue').textContent = `${isoOptions[state.isoIndex]}`;
+      document.getElementById('scenarioTitle').textContent = state.scenario.title;
+      document.getElementById('scenarioDescription').textContent = state.scenario.description;
+      document.getElementById('hintBox').style.display = 'none';
+    }
+
+    function stepSetting(setting, direction){
+      const key = `${setting}Index`;
+      let max = 0;
+      if(setting === 'aperture') max = apertureOptions.length - 1;
+      if(setting === 'shutter') max = shutterOptions.length - 1;
+      if(setting === 'iso') max = isoOptions.length - 1;
+      state[key] = clamp(state[key] + direction, 0, max);
+      updateDisplay();
+    }
+
+    function randomScenario(){
+      const current = state.scenario.title;
+      const choices = scenarios.filter(s => s.title !== current);
+      state.scenario = choices[Math.floor(Math.random() * choices.length)];
+      resetSettings(false);
+    }
+
+    function resetSettings(changeResult = true){
+      state.apertureIndex = 2;
+      state.shutterIndex = 4;
+      state.isoIndex = 2;
+      updateDisplay();
+      if(changeResult){
+        document.getElementById('results').innerHTML = 'Settings reset. Click <strong>Score My Settings</strong> whenever you are ready.';
+      } else {
+        document.getElementById('results').innerHTML = 'New scenario loaded. Adjust your settings and then click <strong>Score My Settings</strong>.';
+      }
+      setScores(0,0,0,0);
+    }
+
+    function showHint(){
+      const hintBox = document.getElementById('hintBox');
+      hintBox.textContent = state.scenario.hint;
+      hintBox.style.display = 'block';
+    }
+
+    function setScores(brightness, motion, depth, total){
+      const items = [
+        ['brightnessScore','brightnessFill',brightness],
+        ['motionScore','motionFill',motion],
+        ['depthScore','depthFill',depth],
+        ['totalScore','totalFill',total]
+      ];
+      items.forEach(([textId, fillId, score]) => {
+        document.getElementById(textId).textContent = Math.round(score);
+        const fill = document.getElementById(fillId);
+        fill.style.width = `${score}%`;
+        fill.style.background = score >= 80 ? 'var(--green)' : score >= 60 ? 'var(--gold)' : 'var(--red)';
+      });
+    }
+
+    function calcEV(aperture, shutter, iso){
+      return Math.log2((aperture * aperture) / shutter) - Math.log2(iso / 100);
+    }
+
+    function scoreBrightness(actualEV, targetEV){
+      const diff = Math.abs(actualEV - targetEV);
+      return clamp(100 - diff * 22, 0, 100);
+    }
+
+    function scoreMotion(shutter, target){
+      const ratio = shutter / target;
+      if(ratio >= 1){ return 100; }
+      if(ratio >= 0.75){ return 82; }
+      if(ratio >= 0.5){ return 65; }
+      if(ratio >= 0.25){ return 40; }
+      return 15;
+    }
+
+    function scoreDepth(aperture, target){
+      if(target === 'shallow'){
+        if(aperture <= 2.8) return 100;
+        if(aperture <= 4) return 82;
+        if(aperture <= 5.6) return 58;
+        return 28;
+      }
+      if(target === 'medium'){
+        if(aperture > 2.8 && aperture <= 8) return 100;
+        if(aperture <= 11) return 72;
+        return 45;
+      }
+      if(target === 'deep'){
+        if(aperture >= 8 && aperture <= 16) return 100;
+        if(aperture >= 5.6) return 75;
+        return 32;
+      }
+      return 50;
+    }
+
+    function buildFeedback(total, brightness, motion, depth, actualEV){
+      const comments = [];
+      if(brightness < 65){
+        if(actualEV > state.scenario.targetEV){
+          comments.push('Your settings make the image too dark for this scene.');
+        } else {
+          comments.push('Your settings make the image too bright for this scene.');
+        }
+      } else {
+        comments.push('Your brightness is in a solid range for the light in this scene.');
+      }
+
+      if(motion < 65){
+        comments.push('Your shutter speed is likely too slow for the kind of movement or handholding involved.');
+      } else {
+        comments.push('Your shutter speed matches the motion needs pretty well.');
+      }
+
+      if(depth < 65){
+        comments.push('Your aperture does not quite match the style of depth of field this shot needs.');
+      } else {
+        comments.push('Your aperture choice fits the look this scene calls for.');
+      }
+
+      let overall = 'Keep adjusting and try again.';
+      if(total >= 90) overall = 'Excellent setup. This is very close to what a photographer would realistically use.';
+      else if(total >= 75) overall = 'Strong setup. A few tweaks could make it even better.';
+      else if(total >= 60) overall = 'You are on the right track, but one or two settings are holding the shot back.';
+
+      return `<strong>${overall}</strong><br>${comments.join(' ')}`;
+    }
+
+    function scoreSetup(){
+      const aperture = apertureOptions[state.apertureIndex];
+      const shutter = shutterOptions[state.shutterIndex].value;
+      const iso = isoOptions[state.isoIndex];
+      const actualEV = calcEV(aperture, shutter, iso);
+
+      const brightness = scoreBrightness(actualEV, state.scenario.targetEV);
+      const motion = scoreMotion(shutter, state.scenario.motionTarget);
+      const depth = scoreDepth(aperture, state.scenario.depthTarget);
+      const total = Math.round((brightness + motion + depth) / 3);
+
+      setScores(brightness, motion, depth, total);
+      document.getElementById('results').innerHTML = buildFeedback(total, brightness, motion, depth, actualEV);
+    }
+
+    updateDisplay();
+    resetSettings();
+  </script>
+</body>
+</html>

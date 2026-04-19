@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Photography | From-Scratch Page</title>
+  <link rel="stylesheet" href="assets/scratch.css" />
+  <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+</head>
+<body>
+  <div class="topbar">
+    <a href="index.html">Professional Home</a>
+    <a href="resume.html">Résumé</a>
+    <a href="projects.html">Experience</a>
+    <a href="app.html">Exposure Explorer App</a>
+  </div>
+
+  <div class="page-shell">
+    <div class="hero-box">
+      <div class="hero-text">
+        <p class="eyebrow">FROM-SCRATCH PAGE</p>
+        <h1>Why I love travel photography</h1>
+        <p>
+          Travel photography mixes planning, creativity, and memory-making. I love how one photo can hold a full feeling:
+          a city at blue hour, a mountain after a storm, or a family moment that would have been forgotten without a camera.
+        </p>
+        <div class="button-row">
+          <a class="button" href="#dream-shot-list">Jump to my dream shot list</a>
+          <a class="button button-secondary" href="app.html">Open the camera web app</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <img src="images/camera-travel.svg" alt="Illustration of a camera, plane, and postcard symbols" />
+      </div>
+    </div>
+
+    <div class="three-up">
+      <div class="info-card">
+        <h2>What makes it fun</h2>
+        <p>
+          It is part art, part storytelling, and part problem solving. You have to notice light, movement, framing, and timing
+          all at once.
+        </p>
+      </div>
+      <div class="info-card">
+        <h2>What I want to improve</h2>
+        <p>
+          I want to get better at manual settings, stronger compositions, and capturing travel moments that feel polished but
+          still real.
+        </p>
+      </div>
+      <div class="info-card">
+        <h2>Favorite kinds of photos</h2>
+        <p>
+          Architecture, city details, mountains, candid family moments, and colorful scenes that instantly bring a trip back
+          to life.
+        </p>
+      </div>
+    </div>
+
+    <div class="split-layout">
+      <div class="content-panel">
+        <h2>My travel photography game plan</h2>
+        <p>
+          When I travel, I like to think in layers. First I get the classic photo. Then I look for smaller details that tell the
+          deeper story of the place.
+        </p>
+
+        <ol>
+          <li>
+            Big must-have shots
+            <ul>
+              <li>One wide establishing image of the location</li>
+              <li>One clean portrait or family photo</li>
+              <li>One skyline, mountain, or landmark image at golden hour</li>
+            </ul>
+          </li>
+          <li>
+            Storytelling details
+            <ul>
+              <li>Signs, doors, food, tickets, and textures</li>
+              <li>Hands holding something local</li>
+              <li>A candid moment that feels unplanned and real</li>
+            </ul>
+          </li>
+          <li>
+            Creative extras
+            <ul>
+              <li>Reflections in windows or puddles</li>
+              <li>Motion blur in busy streets</li>
+              <li>Night shots with dramatic contrast</li>
+            </ul>
+          </li>
+        </ol>
+
+        <p>
+          That is why I built my web app around exposure settings. It lets me practice matching ISO, aperture, and shutter speed
+          to different situations before I travel.
+        </p>
+      </div>
+
+      <div class="content-panel">
+        <img class="feature-image" src="images/rainbow-hike.svg" alt="Illustration of a mountain ridge, storm clouds, and a rainbow" />
+        <p class="caption">
+          One of the reasons I love photography is that it helps ordinary or even difficult moments become memorable later.
+        </p>
+      </div>
+    </div>
+
+    <div class="media-grid">
+      <div class="content-panel">
+        <h2>Video inspiration</h2>
+        <p>
+          This embedded YouTube video is here as part of the assignment, but it also fits the page because improving travel photos
+          is one of my main goals.
+        </p>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/1SwOq_87aUY"
+            title="Travel photography tips video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+      <div class="content-panel">
+        <h2>Extra image</h2>
+        <img class="feature-image" src="images/europe-collage.svg" alt="Illustration of a Europe travel collage with train, camera, and map" />
+        <p class="caption">A local SVG image like this helps prove the page uses images beyond anything from a Bootstrap theme.</p>
+      </div>
+    </div>
+
+    <div class="content-panel tableau-panel" id="dream-shot-list">
+      <h2>Dream shot list + live Tableau visualization</h2>
+      <p>
+        Below is a live Tableau visualization embedded directly on the page. It is interactive, so viewers can click and explore
+        the dashboard instead of just seeing a screenshot.
+      </p>
+
+      <div class="shot-grid">
+        <div class="shot-card">
+          <h3>1. Blue hour city street</h3>
+          <p>Wet pavement, glowing lights, and people moving through the frame.</p>
+        </div>
+        <div class="shot-card">
+          <h3>2. Quiet early-morning architecture</h3>
+          <p>A clean composition before crowds fill the space.</p>
+        </div>
+        <div class="shot-card">
+          <h3>3. Mountain weather drama</h3>
+          <p>Clouds, light, and contrast all changing at once.</p>
+        </div>
+      </div>
+
+      <div class="tableau-wrapper">
+        <tableau-viz
+          id="tableauViz"
+          src="https://public.tableau.com/views/RegionalSampleWorkbook/Flights"
+          toolbar="bottom"
+          hide-tabs>
+        </tableau-viz>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
